@@ -55,3 +55,17 @@ process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
 
 console.log("Telegram bot is running...");
+
+// --- Dummy HTTP Server for Free Hosting Tiers (like Render Web Service) ---
+// Free tiers often require a web server to bind to a port to keep the app alive.
+import http from 'http';
+
+const port = process.env.PORT || 3000;
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Telegram Bot is running!\n');
+});
+
+server.listen(port, () => {
+  console.log(`Dummy HTTP server listening on port ${port} to satisfy health checks.`);
+});
